@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1030251484875",
+    "project_id": "umangly-app",
+    "storage_bucket": "umangly-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030251484875:android:9873564bcd011fd7da2d4e",
+        "android_client_info": {
+          "package_name": "com.example.umangly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGWYdWU5b12DBy0IrPKE_q5dXLMUDQAL4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
