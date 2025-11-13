@@ -59,6 +59,9 @@ dependencies:
   # Image processing for emotion detection
   image: ^4.0.17
   
+  # Image picker for diary photos
+  image_picker: ^1.0.4
+  
   # Python bridge for OpenCV + DeepFace (legacy - now using HTTP API)
   process_run: ^0.12.5+2
   path: ^1.8.3
@@ -69,6 +72,9 @@ dependencies:
   provider: ^6.1.1
   firebase_analytics: ^11.3.3
   confetti: ^0.7.0
+  
+  # Calendar widget for diary
+  table_calendar: ^3.0.9
 
 dev_dependencies:
   flutter_test:
@@ -98,6 +104,7 @@ flutter:
     - assets/sounds/music/
     - assets/sounds/ambient/
     - assets/models/
+    - assets/avatars/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

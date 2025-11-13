@@ -4,9 +4,62 @@ import 'auth/login_screen.dart';
 import 'meditation_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'simple_emotion_webview_screen.dart';
+import 'diary_screen.dart';
+import 'virtual_friend_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    switch (index) {
+      case 0:
+        // Home - already on home
+        break;
+      case 1:
+        // Activities - can add activities screen later
+        break;
+      case 2:
+        // Journal - navigate to diary
+        _navigateToDiary();
+        break;
+      case 3:
+        // Profile - can add profile screen later
+        break;
+    }
+  }
+
+  void _navigateToDiary() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const DiaryScreen(),
+      ),
+    );
+    // Reset selection when returning
+    setState(() {
+      _selectedIndex = 0;
+    });
+  }
+
+  void _navigateToVirtualFriend() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const VirtualFriendScreen(),
+      ),
+    );
+    // Reset selection when returning
+    setState(() {
+      _selectedIndex = 0;
+    });
+  }
 
   Future<void> _signOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
@@ -611,18 +664,20 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Additional Features
-            const FeatureListCard(
+            FeatureListCard(
               icon: Icons.book,
               title: "AI Diary",
               subtitle: "Record your thoughts and feelings",
               color: Color(0xFF667eea),
+              onTap: _navigateToDiary,
             ),
             const SizedBox(height: 12),
-            const FeatureListCard(
+            FeatureListCard(
               icon: Icons.smart_toy,
               title: "Virtual Friend",
               subtitle: "AI-powered emotional companion",
               color: Color(0xFF764ba2),
+              onTap: _navigateToVirtualFriend,
             ),
           ],
         ),
@@ -632,6 +687,8 @@ class HomeScreen extends StatelessWidget {
         selectedItemColor: Colors.deepPurple,
         unselectedItemColor: Colors.grey,
         elevation: 10,
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

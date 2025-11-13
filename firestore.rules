@@ -1,0 +1,48 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow authenticated users to access their own user data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // Allow access to user's virtual friends subcollection
+      match /virtualFriends/{friendId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      // Allow access to user's chat sessions subcollection
+      match /chatSessions/{sessionId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+    
+    // Virtual Friends collection - readable by authenticated users
+    match /virtualFriends/{friendId} {
+      allow read: if request.auth != null;
+      allow write: if false; // Only allow server-side writes
+    }
+    
+    // Chat Sessions - users can only access their own sessions
+    match /chatSessions/{sessionId} {
+      allow read, write: if request.auth != null && 
+        (resource == null || resource.data.userId == request.auth.uid);
+    }
+    
+    // Diary Entries - users can only access their own diary entries
+    match /diary_entries/{entryId} {
+      allow read, write: if request.auth != null && 
+        (resource == null || resource.data.userId == request.auth.uid);
+    }
+    
+    // Writing Prompts - readable by authenticated users, writable by admins only
+    match /writing_prompts/{promptId} {
+      allow read: if request.auth != null;
+      allow write: if false; // Only admins can create prompts
+    }
+    
+    // Allow users to create and read their own activity logs
+    match /activityLogs/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
