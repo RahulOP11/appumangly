@@ -69,9 +69,11 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen>
   Future<void> _onMoodSelected(MoodType mood) async {
     if (isSubmitting) return;
     
+    // Clear any previous response first
     setState(() {
       selectedMood = mood;
       isSubmitting = true;
+      currentResponse = null; // Clear previous response
     });
 
     await _buttonController.forward();
@@ -93,6 +95,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen>
         MoodResponseHandler.playMoodSound(mood);
         
         setState(() {
+          selectedMood = mood;  // Set selectedMood first
           currentResponse = response;
           isSubmitting = false;
         });

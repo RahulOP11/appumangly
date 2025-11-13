@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/meditation_models.dart';
 import '../services/meditation_data_service.dart';
+import 'meditation_player_screen.dart';
 
 class GuidedMeditationScreen extends StatefulWidget {
   const GuidedMeditationScreen({super.key});
@@ -139,12 +140,7 @@ class _GuidedMeditationScreenState extends State<GuidedMeditationScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Scaffold(
-                appBar: AppBar(title: Text(session.title)),
-                body: Center(
-                  child: Text('Meditation Player - ${session.title}'),
-                ),
-              ),
+              builder: (context) => MeditationPlayerScreen(session: session),
             ),
           );
         },

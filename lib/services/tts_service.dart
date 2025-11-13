@@ -55,6 +55,17 @@ class TTSService {
     }
   }
 
+  // Simple speak without SSML processing for timer announcements
+  static Future<void> speakSimple(String text) async {
+    await initialize();
+    
+    try {
+      await _flutterTts.speak(text);
+    } catch (e) {
+      print('TTS simple speak error: $e');
+    }
+  }
+
   static Future<void> stop() async {
     try {
       await _flutterTts.stop();

@@ -152,7 +152,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
             child: _buildBreathingCircle(),
           ),
           _buildControls(),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
         ],
       ),
     );
@@ -160,8 +160,8 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
 
   Widget _buildPatternSelector() {
     return Container(
-      height: 120,
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      height: 95,
+      margin: const EdgeInsets.symmetric(vertical: 2),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -179,14 +179,14 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
               }
             },
             child: Container(
-              width: 160,
-              margin: const EdgeInsets.only(right: 15),
-              padding: const EdgeInsets.all(16),
+              width: 140,
+              margin: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: isSelected 
                     ? Colors.white 
                     : Colors.white.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: Colors.white.withOpacity(0.3),
                   width: 1,
@@ -202,22 +202,22 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                           ? const Color(0xFF667eea) 
                           : Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 12,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 1),
                   Text(
                     pattern.description,
                     style: TextStyle(
                       color: isSelected 
                           ? Colors.grey[600] 
                           : Colors.white70,
-                      fontSize: 12,
+                      fontSize: 9,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 2),
                   Row(
                     children: [
                       Text(
@@ -227,6 +227,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                               ? const Color(0xFF667eea) 
                               : Colors.white,
                           fontWeight: FontWeight.bold,
+                          fontSize: 10,
                         ),
                       ),
                       Text(
@@ -236,6 +237,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                               ? const Color(0xFF667eea) 
                               : Colors.white,
                           fontWeight: FontWeight.bold,
+                          fontSize: 10,
                         ),
                       ),
                       Text(
@@ -245,6 +247,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                               ? const Color(0xFF667eea) 
                               : Colors.white,
                           fontWeight: FontWeight.bold,
+                          fontSize: 10,
                         ),
                       ),
                     ],
@@ -267,8 +270,8 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
             animation: _breathingAnimation,
             builder: (context, child) {
               return Container(
-                width: 200 + (100 * _breathingAnimation.value),
-                height: 200 + (100 * _breathingAnimation.value),
+                width: 180 + (80 * _breathingAnimation.value),
+                height: 180 + (80 * _breathingAnimation.value),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: RadialGradient(
@@ -281,15 +284,15 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                   boxShadow: [
                     BoxShadow(
                       color: Colors.white.withOpacity(0.3),
-                      blurRadius: 20,
-                      spreadRadius: 5,
+                      blurRadius: 15,
+                      spreadRadius: 3,
                     ),
                   ],
                 ),
                 child: Center(
                   child: Container(
-                    width: 150,
-                    height: 150,
+                    width: 130,
+                    height: 130,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: LinearGradient(
@@ -302,29 +305,29 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                     child: Icon(
                       Icons.air,
                       color: Colors.white,
-                      size: 60,
+                      size: 50,
                     ),
                   ),
                 ),
               );
             },
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 30),
           Text(
             _currentPhase,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
           ),
           if (_isRunning) ...[
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             Text(
               'Cycle $_currentCycle of $_totalCycles',
               style: TextStyle(
                 color: Colors.white.withOpacity(0.8),
-                fontSize: 16,
+                fontSize: 15,
               ),
             ),
           ],

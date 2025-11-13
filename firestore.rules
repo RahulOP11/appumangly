@@ -28,6 +28,13 @@ service cloud.firestore {
         (resource == null || resource.data.userId == request.auth.uid);
     }
     
+    // Mood History - users can only access their own mood data
+    match /moodHistory/{moodId} {
+      allow read, write: if request.auth != null && 
+        (resource == null || resource.data.userId == request.auth.uid);
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+    
     // Diary Entries - users can only access their own diary entries
     match /diary_entries/{entryId} {
       allow read, write: if request.auth != null && 
@@ -42,6 +49,18 @@ service cloud.firestore {
     
     // Allow users to create and read their own activity logs
     match /activityLogs/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Smile Daily Data - users can only access their own smile tracking data
+    match /smile_daily_data/{documentId} {
+      allow read, write: if request.auth != null && 
+        (resource == null || resource.data.userId == request.auth.uid);
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+    
+    // Smile Streaks - users can only access their own streak data
+    match /smile_streaks/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
   }

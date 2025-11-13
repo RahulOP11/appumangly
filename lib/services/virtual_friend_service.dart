@@ -3,11 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/virtual_friend_models.dart';
 import 'gemini_ai_service.dart';
+import 'dialogflow_service.dart';
 
 class VirtualFriendService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GeminiAIService _aiService = GeminiAIService();
+  final DialogflowService _dialogflowService = DialogflowService();
 
   // Get current user ID
   String? get _currentUserId => _auth.currentUser?.uid;
@@ -267,14 +269,26 @@ class VirtualFriendService {
       // Add user message to session
       session.messages.add(userChatMessage);
 
-      // Generate AI response
-      final aiResponse = await _aiService.generateFriendResponse(
-        friend: friend,
-        userMessage: userMessage,
-        conversationHistory: session.messages,
-        userMood: userMood,
-        context: context,
-      );
+      // Generate AI response - use Dialogflow for Arav, Gemini for others
+      String aiResponse;
+      if (friend.name.toLowerCase() == 'arav') {
+        // Use Dialogflow for Arav
+        final sessionId = 'user_${_currentUserId}_friend_${friendId}';
+        aiResponse = await _dialogflowService.detectIntent(
+          sessionId: sessionId,
+          text: userMessage,
+          friend: friend,
+        );
+      } else {
+        // Use Gemini for other friends
+        aiResponse = await _aiService.generateFriendResponse(
+          friend: friend,
+          userMessage: userMessage,
+          conversationHistory: session.messages,
+          userMood: userMood,
+          context: context,
+        );
+      }
 
       // Create AI response message
       final aiChatMessage = ChatMessage(

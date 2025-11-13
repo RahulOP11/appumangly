@@ -85,10 +85,9 @@ class _MeditationTimerScreenState extends State<MeditationTimerScreen>
     _progressController.duration = Duration(seconds: _remainingSeconds);
     _progressController.forward();
 
-    // Announce start
-    await TTSService.speakMeditationScript(
-      'Your ${_selectedMinutes} minute meditation session is beginning. Find a comfortable position and close your eyes.'
-    );
+    // Announce start with properly formatted string (bypass SSML processing)
+    String startMessage = 'Your ${_selectedMinutes.toString()} minute meditation session is beginning. Find a comfortable position and close your eyes.';
+    await TTSService.speakSimple(startMessage);
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_remainingSeconds > 0) {
@@ -112,10 +111,9 @@ class _MeditationTimerScreenState extends State<MeditationTimerScreen>
     // Fade out background sound
     await AudioService.fadeOut();
     
-    // Completion message
-    await TTSService.speakMeditationScript(
-      'Your meditation session is complete. Take a moment to notice how you feel. Well done.'
-    );
+    // Completion message with properly formatted string
+    String completionMessage = 'Your meditation session is complete. Take a moment to notice how you feel. Well done.';
+    await TTSService.speakSimple(completionMessage);
     
     _showCompletionDialog();
   }
@@ -129,6 +127,7 @@ class _MeditationTimerScreenState extends State<MeditationTimerScreen>
 
     _progressController.reset();
     await AudioService.stop();
+    await TTSService.stop(); // Stop any ongoing TTS
   }
 
   void _showCompletionDialog() {
@@ -136,7 +135,7 @@ class _MeditationTimerScreenState extends State<MeditationTimerScreen>
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('🎉 Session Complete!'),
-        content: Text('You meditated for $_selectedMinutes minutes. Great job!'),
+        content: Text('You meditated for ${_selectedMinutes.toString()} minutes. Great job!'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),

@@ -83,3 +83,87 @@ class UserSmileStats {
     );
   }
 }
+
+class SmileDayData {
+  final String userId;
+  final DateTime date;
+  final int smileCount;
+  final int pointsEarned;
+  final DateTime createdAt;
+  final DateTime? updatedAt;
+
+  SmileDayData({
+    required this.userId,
+    required this.date,
+    required this.smileCount,
+    required this.pointsEarned,
+    required this.createdAt,
+    this.updatedAt,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'userId': userId,
+      'date': date.toIso8601String().split('T')[0], // Store as YYYY-MM-DD
+      'smileCount': smileCount,
+      'pointsEarned': pointsEarned,
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
+    };
+  }
+
+  factory SmileDayData.fromMap(Map<String, dynamic> map) {
+    return SmileDayData(
+      userId: map['userId'] ?? '',
+      date: DateTime.parse(map['date']),
+      smileCount: map['smileCount'] ?? 0,
+      pointsEarned: map['pointsEarned'] ?? 0,
+      createdAt: DateTime.parse(map['createdAt']),
+      updatedAt: map['updatedAt'] != null ? DateTime.parse(map['updatedAt']) : null,
+    );
+  }
+}
+
+class SmileWeeklyStats {
+  final int totalSmiles;
+  final int totalPoints;
+  final int daysActive;
+  final List<SmileDayData> dailyData;
+
+  SmileWeeklyStats({
+    required this.totalSmiles,
+    required this.totalPoints,
+    required this.daysActive,
+    required this.dailyData,
+  });
+}
+
+class SmileStreak {
+  final int currentStreak;
+  final int longestStreak;
+  final DateTime? lastActiveDate;
+
+  SmileStreak({
+    required this.currentStreak,
+    required this.longestStreak,
+    this.lastActiveDate,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'currentStreak': currentStreak,
+      'longestStreak': longestStreak,
+      'lastActiveDate': lastActiveDate?.toIso8601String(),
+    };
+  }
+
+  factory SmileStreak.fromMap(Map<String, dynamic> map) {
+    return SmileStreak(
+      currentStreak: map['currentStreak'] ?? 0,
+      longestStreak: map['longestStreak'] ?? 0,
+      lastActiveDate: map['lastActiveDate'] != null 
+          ? DateTime.parse(map['lastActiveDate']) 
+          : null,
+    );
+  }
+}

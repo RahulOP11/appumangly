@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'auth/login_screen.dart';
 import 'meditation_screen.dart';
+import 'affirmation_screen.dart';
+import 'mind_tricks_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'simple_emotion_webview_screen.dart';
 import 'diary_screen.dart';
 import 'virtual_friend_screen.dart';
+import 'activity_screen.dart';
+import 'profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,14 +27,16 @@ class _HomeScreenState extends State<HomeScreen> {
         // Home - already on home
         break;
       case 1:
-        // Activities - can add activities screen later
+        // Activities - navigate to activity screen
+        _navigateToActivity();
         break;
       case 2:
         // Journal - navigate to diary
         _navigateToDiary();
         break;
       case 3:
-        // Profile - can add profile screen later
+        // Profile - navigate to profile screen
+        _navigateToProfile();
         break;
     }
   }
@@ -40,6 +46,32 @@ class _HomeScreenState extends State<HomeScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => const DiaryScreen(),
+      ),
+    );
+    // Reset selection when returning
+    setState(() {
+      _selectedIndex = 0;
+    });
+  }
+
+  void _navigateToActivity() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ActivityScreen(),
+      ),
+    );
+    // Reset selection when returning
+    setState(() {
+      _selectedIndex = 0;
+    });
+  }
+
+  void _navigateToProfile() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ProfileScreen(),
       ),
     );
     // Reset selection when returning
@@ -646,17 +678,37 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                 ),
-                const FeatureCard(
-                  icon: Icons.format_quote,
-                  title: "Affirmations",
-                  subtitle: "Daily positivity",
-                  colors: [Color(0xFFd299c2), Color(0xFFfef9d7)],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AffirmationScreen(),
+                      ),
+                    );
+                  },
+                  child: const FeatureCard(
+                    icon: Icons.format_quote,
+                    title: "Affirmations",
+                    subtitle: "Daily positivity",
+                    colors: [Color(0xFFd299c2), Color(0xFFfef9d7)],
+                  ),
                 ),
-                const FeatureCard(
-                  icon: Icons.visibility,
-                  title: "Mind Tricks",
-                  subtitle: "Stress relief",
-                  colors: [Color(0xFF89f7fe), Color(0xFF66a6ff)],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MindTricksScreen(),
+                      ),
+                    );
+                  },
+                  child: const FeatureCard(
+                    icon: Icons.visibility,
+                    title: "Mind Tricks",
+                    subtitle: "Stress relief",
+                    colors: [Color(0xFF89f7fe), Color(0xFF66a6ff)],
+                  ),
                 ),
               ],
             ),

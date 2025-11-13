@@ -44,9 +44,14 @@ dependencies:
   audioplayers: ^6.0.0
   flutter_tts: ^4.0.2
   shared_preferences: ^2.2.2
+  video_player: ^2.7.2
   
   # HTTP for API calls
   http: ^1.1.0
+  
+  # Dialogflow integration
+  googleapis: ^11.4.0
+  googleapis_auth: ^1.4.1
   
   # Web and deep link support for emotion detection
   url_launcher: ^6.2.1
@@ -105,6 +110,7 @@ flutter:
     - assets/sounds/ambient/
     - assets/models/
     - assets/avatars/
+    - assets/dialogflow_config.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
