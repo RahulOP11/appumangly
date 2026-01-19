@@ -12,3 +12,10 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
+**/*.json
+# GCP service account keys
+assets/dialogflow_config.json 
+ assets/umangly-app-f2f7668dd890.json
+assets/umangly-app-f304568f7d07.json
+temp_emotion_repo/
+
